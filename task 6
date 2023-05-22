@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul id="list">
+    <li>Джон</li>
+    <li>Пит</li>
+    <li>Джессика</li>
+    <li>Сара</li>
+    </ul>
+    <h1>Сегодня:</h1>
+    <select name="search" class="one">
+    <ul></ul>
+
+<script>
+function getTextFrom(ul) {    
+    const list = ul.querySelectorAll('li')
+    return [...list].map(item=> item.textContent)
+}
+const ul = document.querySelector('ul')
+console.log(getTextFrom(ul))
+
+var h2 = document.createElement('h2');
+h2.innerHTML="15.05.2023"
+document.body.append(h2);
+
+var p = document.createElement('p');
+p.innerHTML = "<strong>Cookie and Luffi are cats<strong>";
+p.style.fontSize="38px";
+document.body.append(p);
+
+var a;
+var b;
+var c;
+function getRandomTeg(text, color, teg){
+ a= document.createElement(`${teg}`);
+ b=a.innerHTML=`${text}`;
+ c= a.style.color=`${color}`;
+ return a;
+}
+document.body.append(getRandomTeg('I love you','red', 'h3'));
+document.body.append(getRandomTeg('I love you','blue', 'h3'));
+document.body.append(getRandomTeg('I love you','green', 'h3'));
+
+var s =  document.querySelector('.one').options;
+s[s.length]= new Option('1960',true);
+s[s.length]= new Option('1970',true);
+s[s.length]= new Option('1980',true);
+s[s.length]= new Option('1990',true);
+
+</script>
+</body>
+</html>
+
+//В файле html есть разметка:
+//Вывести в консоль каждое из имен (содержимое каждого li).
+//ПОДСКАЗКИ
+//1) C помощью метода document.querySelectorAll найдите на странице все пункты списка (li) и запишите в переменную. У вас получится html-коллекция (массив). 
+//2) Обойдите коллекцию с помощью forEach и для каждого li вывкдите в консоль текстовое содержимое (innerText)
+
+//Создать с помощью js абзац (тег p). Добавить в него контент. Добавить к нему стили: размер 36px, жирный шрифт. Добавить абзац с текстом на страницу.
+
+//Написать в html тег заголовка с текстом "Сегодня:" 
+//После заголовка подготовить в html пустой параграф. С помощью js добавить в него сегодняшнюю дату.
+
+//Написать функцию, которая принимает на вход 3 параметра: название тега, название цвета, содержимое. Функция должна сформировать необходимый тег, добавить необходимый стиль с цветом и внести содержимое. Вывести несколько таких сгенерированных тегов в консоль, затем отправить их на страницу.
+
+//Вставить в страницу (в html документ) тег <select>. С помощью js (в цикле) добавить в этот select опции (option) под годы от 1960 по 2020.
+
