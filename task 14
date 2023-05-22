@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <section class="section">
+    <div class="container">
+      <div class="section__tabs tabs">
+        <div class="tabs__head">
+          <div class="tabs__caption" data-tab="home">Home</div>
+          <div class="tabs__caption" data-tab="portfolio">Portfolio</div>
+          <div class="tabs__caption" data-tab="about">About</div>
+        </div>
+        <div class="tabs__body">
+          <div class="tabs__content" data-tab="home">Home lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia sit, repellat assumenda excepturi minima debitis atque nulla quibusdam iste eligendi voluptas, obcaecati nihil necessitatibus vel illum itaque ea molestias vero! Home lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia sit, repellat assumenda excepturi minima debitis atque nulla quibusdam iste eligendi voluptas, obcaecati nihil necessitatibus vel illum itaque ea molestias vero!</div>
+          <div class="tabs__content" data-tab="portfolio">Portfolio lorem ipsum dolor sit amet, consectetur adipisicing elit. Id magni sit, enim tenetur animi eius ea, similique optio nostrum quibusdam ex, dolores dolorem. Recusandae quo molestiae modi saepe ratione numquam!</div>
+          <div class="tabs__content" data-tab="about">About lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia quibusdam nemo qui numquam magnam! In sunt, ut cum nulla, accusantium mollitia et illum voluptate repudiandae! Magnam alias, iure saepe animi.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
+
+document.addEventListener('DOMContentLoaded', () => { // Структура страницы загружена и готова к взаимодействию
+
+  const tabs = () => { // объявляем основную функцию для вкладок, чтобы вся логика была в одном месте
+    const head = document.querySelector('.tabs__head') // ищем элемент с кнопками и записываем в константу
+    const body = document.querySelector('.tabs__body') // ищем элемент с контентом и записываем в константу
+
+    const getActiveTabName = () => { // объявляем функцию для получения названия активной вкладки
+      return head.querySelector('.tabs__caption_active').dataset.tab // возвращаем значение data-tab активной кнопки
+    }
+
+    const setActiveContent = () => { // объявляем функцию для установки активного элемента контента
+      if (body.querySelector('.tabs__content_active')) { // если уже есть активный элемент контента
+        body.querySelector('.tabs__content_active').classList.remove('tabs__content_active') // то скрываем его
+      }
+      body.querySelector(`[data-tab=${getActiveTabName()}]`).classList.add('tabs__content_active') // затем ищем элемент контента, у которого значение data-tab совпадает со значением data-tab активной кнопки и отображаем его
+    }
+
+    // проверяем при загрузке страницы, есть ли активная вкладка
+    if (!head.querySelector('.tabs__caption_active')) {  // если активной вкладки нет
+      head.querySelector('.tabs__caption').classList.add('tabs__caption_active') // то делаем активной по-умолчанию первую вкладку
+    }
+
+    setActiveContent(getActiveTabName()) // устанавливаем активный элемент контента в соответствии с активной кнопкой при загрузке страницы
+
+    head.addEventListener('click', e => { // при клике на .tabs__head
+      const caption = e.target.closest('.tabs__caption') // узнаем, был ли клик на кнопке
+      if (!caption) return // если клик был не на кнопке, то прерываем выполнение функции
+      if (caption.classList.contains('tabs__caption_active')) return // если клик был на активной кнопке, то тоже прерываем выполнение функции и ничего не делаем
+
+      if (head.querySelector('.tabs__caption_active')) { // если уже есть активная кнопка
+        head.querySelector('.tabs__caption_active').classList.remove('tabs__caption_active') // то удаляем ей активный класс
+      }
+
+      caption.classList.add('tabs__caption_active') // затем добавляем активный класс кнопке, на которой был клик
+
+      setActiveContent(getActiveTabName()) // устанавливаем активный элемент контента в соответствии с активной кнопкой
+    })
+  }
+
+  tabs() // вызываем основную функцию
+
+})
+
+
+.container {
+  max-width: 1140px;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+.tabs {
+  overflow: hidden;
+  border-radius: 15px;
+}
+.tabs__head {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.tabs__caption {
+  flex: 1;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 8px 30px;
+  font-size: 18px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: var(--color);
+  opacity: 0.6;
+  background: var(--primary);
+  transition: 0.25s;
+}
+.tabs__caption:hover {
+  opacity: 0.8;
+}
+.tabs__caption_active {
+  opacity: 1;
+  background: var(--primary);
+}
+.tabs__body {
+  background: var(--primary);
+  position: relative;
+  top: -2px;
+  transition: 0.25s;
+}
+.tabs__content {
+  display: none;
+  padding: 30px;
+  color: var(--color);
+  transform: scaleY(0.8);
+  opacity: 0;
+  transform-origin: center top;
+  -webkit-animation: showContent 0.6s forwards;
+  animation: showContent 0.6s forwards;
+}
+.tabs__content_active {
+  display: block;
+}
+.section {
+  --primary: #3fa7d6;
+  --color: #fff;
+  padding: 15px 0;
+}
+.about {
+  padding: 15px 0;
+  --primary: #8cff98;
+  --color: #121212;
+}
+@-webkit-keyframes showContent {
+  0% {
+    transform: scaleY(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+@keyframes showContent {
+  0% {
+    transform: scaleY(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
