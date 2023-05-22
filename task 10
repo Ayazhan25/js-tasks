@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container container_shadow">
+    <div class="block">
+      <div class="card card_content">
+          <span class="card__title">
+            Список задач
+          </span>
+        <div class="row">
+          <form id="taskForm" class="form">
+            <div class="form__input">
+              <input id="task" type="text" name="task" class="input__inLine">
+              <label for="task" class="label">
+                новая задача
+              </label>
+            </div>
+            <input type="submit" value="Добавить" class="btn btn_add">
+          </form>
+        </div>
+      </div>
+      <div class="card card__action">
+          <span class="card__title">
+            Задачи
+          </span>
+        <div class="row">
+          <div class="form__input">
+            <input id="filter" type="text" name="filter" class="input__inLine">
+            <label for="filter" class="label">фильтр задач</label>
+          </div>
+        </div>
+      </div>
+      <ul class="collection">
+      </ul>
+      <button type="reset" class="btn btn_clear">Очистить все</button>
+    </div>
+  </div>
+
+ <script src="js/script.js"></script> 
+</body>
+</html>
+
+const form = document.querySelector('#taskForm');
+const taskList = document.querySelector('.collection');
+const clearBtn = document.querySelector('.btn_clear');
+const filter = document.querySelector('#filter');
+const taskInput = document.querySelector('#task');
+
+loadEventListeners();
+
+function loadEventListeners() {
+	document.addEventListener('DOMContentLoaded', getTasks);
+
+	form.addEventListener('submit', addTask);
+
+	taskList.addEventListener('click', removeTask);
+
+	clearBtn.addEventListener('click', clearTasks);
+
+	filter.addEventListener('keyup', filterTasks);
+}
+
+function getTasks() {
+	let tasks;
+
+	if(localStorage.getItem('tasks') === null) {
+		tasks = [];
+	} else {
+		tasks = JSON.parse(localStorage.getItem('tasks'));
+	}
+
+	tasks.forEach(function (task) {
+		const li = document.createElement('li');
+		li.className = 'collection__item';
+		li.appendChild(document.createTextNode(task));
+		const link = document.createElement('a');
+		link.className = 'delete-item';
+		link.innerHTML = '<i class="fa fa-remove"></i>';
+		li.appendChild(link);
+
+		taskList.appendChild(li);
+	})
+}
+
+function addTask(e) {
+	if(taskInput.value === '') {
+		alert('Напишите задачу');
+	}
+
+	const li = document.createElement('li');
+	li.className = 'collection__item';
+	li.appendChild(document.createTextNode(taskInput.value));
+	const link = document.createElement('a');
+	link.className = 'delete-item';
+	link.innerHTML = '<i class="fa fa-remove"></i>';
+	li.appendChild(link);
+
+	taskList.appendChild(li);
+
+	storeTaskInLs(taskInput.value);
+
+	taskInput.value = '';
+
+	e.preventDefault();
+}
+
+function storeTaskInLs(task) {
+	let tasks;
+
+	if(localStorage.getItem('tasks') === null) {
+		tasks = [];
+	} else {
+		tasks = JSON.parse(localStorage.getItem('tasks'));
+	}
+	tasks.push(task);
+
+	localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function removeTask(e) {
+	if(e.target.parentElement.classList.contains('delete-item')) {
+		if(confirm('Удалить задачу?')) {
+			e.target.parentElement.parentElement.remove();
+
+			removeTaskFromLs(e.target.parentElement.parentElement);
+		}
+	}
+}
+
+function removeTaskFromLs(taskItem) {
+	let tasks;
+
+	if(localStorage.getItem('tasks') === null) {
+		tasks = [];
+	} else {
+		tasks = JSON.parse(localStorage.getItem('tasks'));
+	}
+	tasks.forEach(function (task, index) {
+		if(taskItem.textContent === task) {
+			tasks.splice(index, 1);
+		}
+	});
+
+	localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function clearTasks() {
+	while(taskList.firstChild) {
+		taskList.removeChild(taskList.firstChild);
+	}
+
+	clearLs();
+}
+
+function clearLs() {
+	localStorage.clear();
+}
+
+function filterTasks(e) {
+	const filterText = e.target.value.toLowerCase();
+
+	document.querySelectorAll('.collection__item').forEach
+	(function(task) {
+		const filteredTask = task.firstChild.textContent;
+		if(filteredTask.toLowerCase().indexOf(filterText) !== -1) {
+			task.style.display = 'block';
+		} else {
+			task.style.display = 'none';
+		}
+	});
+}
+
+.container {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 1.4em;
+  margin: 0 auto;
+  padding: 10px 10px;
+  border-radius: 2px;
+  color: darkgrey;
+}
+.container_shadow {
+  -webkit-box-shadow: 1px 9px 13px 2px rgba(158,152,158,0.76);
+  -moz-box-shadow: 1px 9px 13px 2px rgba(158,152,158,0.76);
+  box-shadow: 1px 9px 13px 2px rgba(158,152,158,0.76);
+}
+.block {
+  padding: 10px;
+}
+.card {
+  padding: 15px 0;
+}
+.card__title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.row {
+  margin-top: 10px;
+}
+.form__input {
+  position: relative;
+}
+.input__inLine {
+  width: 97%;
+  border: none;
+  border-bottom: 2px solid #9e9e9e;
+  outline: none;
+  height: 22px;
+  font-size: 0.9em;
+  padding: 5px 10px;
+}
+.input__inLine:focus {
+  border-bottom: 2px solid #52cc99;
+}
+.input__inLine:focus + .label{
+  opacity: 0;
+}
+.label {
+  opacity: 0.3;
+  position: absolute;
+  top: 0;
+  left: 10px;
+}
+.label:focus {
+  opacity: 0;
+}
+.btn {
+  border: 1px solid #52cc99;
+  border-radius: 2px;
+  width: 120px;
+  background: #52cc99;
+  padding: 8px;
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  outline: none;
+  text-transform: lowercase;
+  -webkit-box-shadow: 0 9px 13px -2px rgba(158,152,158,0.76);
+  -moz-box-shadow: 0 9px 13px -2px rgba(158,152,158,0.76);
+  box-shadow: 0 9px 13px -2px rgba(158,152,158,0.76);
+}
+.btn:hover {
+  opacity: 0.6;
+  transition-duration: 0.3s;
+  cursor: pointer;
+}
+.btn:active {
+  border: 1px solid white;
+  background: white;
+}
+.btn_clear:hover {
+  border: 1px solid pink;
+  background: pink;
+}
+.collection {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.collection__item {
+  border: 1px solid #e0e0e0;
+  padding: 10px 20px;
+  margin-bottom: 3px;
+  font-size: 0.95em;
+}
+.delete-item {
+  color: #ffab40;
+  text-decoration: none;
+  outline: none;
+  font-size: 18px;
+  transition: color .3s ease;
+  float: right;
+}
+.delete-item:hover {
+  opacity: .6;
+}
