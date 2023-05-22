@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Dollar to Tenge Converter</h1>
+    <label for="dollarAmount">Enter Dollar Amount:</label>
+    <input type="text" id="dollarAmount">
+    <button onclick="convertToTenge()">Convert</button>
+    <p id="result"></p>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
+
+function convertToTenge() {
+  let dollarAmount = parseFloat(document.getElementById("dollarAmount").value);
+
+  if (isNaN(dollarAmount)) {
+      document.getElementById("result").innerText = "Please enter a valid dollar amount.";
+      return;
+  }
+
+  let conversionRate = 448; 
+  let tengeAmount = dollarAmount * conversionRate;
+
+  document.getElementById("result").innerText = "Equivalent amount in Tenge: " + tengeAmount.toFixed(2);
+}
