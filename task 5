@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script src="js/script.js"></script>
+</body>
+</html>
+
+//Напишите функцию ucFirst(str), возвращающую строку str с заглавным первым символом.
+//Вам понадобятся методы строк.
+
+function ucFirst(str) {
+  if (!str) return str;
+  return str[0].toUpperCase() + str.slice(1);
+}
+console.log( ucFirst("cookie") );
+
+//Напишите функцию checkSpam(str), возвращающую true, если str содержит 'badWord' или 'XXX', а иначе false.
+//Функция должна быть нечувствительна к регистру.
+
+function checkSpam(str) {
+  let lowerStr = str.toLowerCase();
+  return lowerStr.includes('badWord') || lowerStr.includes('xxx');
+}
+
+console.log( checkSpam('Say xxx now') );
+console.log( checkSpam('free xxxxx') );
+console.log( checkSpam("I love Luffi") );
+
+//Написать функцию, которой на вход подается строка, на выход она дает символы наоборот (разворачивает строку). Пример: «привет Женя» -> «янеЖ тевирп»
+//Обратите внимание: метод reverse существует только у массивов.
+
+function reverseStr(str){
+  var a = "";
+  for (i = 0; i < str.length; i++){
+     a += str[(str.length - 1) - i];
+  }
+  return a;
+}
+console.log(reverseStr('Luffi'));
+
+//Массив содержит строки с информацией о железнодорожных станциях на севере Англии. Строки представляют собой трёхбуквенный код станции, затем некоторые машиночитаемые данные, за которыми следует точка с запятой, а затем название станции, пригодное для чтения человеком. 
+//let stations = [
+
+  //'MAN675847583748sjt567654;Manchester Piccadilly',
+  
+  //'GNF576746573fhdg4737dh4;Greenfield',
+  
+  //'LIV5hg65hd737456236dch46dg4;Liverpool Lime Street',
+  
+  //'SYB4f65hf75f736463;Stalybridge',
+  
+  //'HUD5767ghtyfyr4536dh45dg45dg3;Huddersfield'
+  
+  //];
+  //Необходимо извлечь код станции и имя и поместить их в строку со следующей структурой:
+  //MAN: Manchester Piccadilly
+  //Вывести эти строки в консоль
+  //ПОДСКАЗКА:
+  //1. Извлеките трёхбуквенный код станции и сохраните его в новой переменной.
+  //2. Найдите номер символьного номера точки с запятой.
+  //3. Извлеките название для чтения человеком, используя номер индекса точки с запятой в качестве контрольной точки и сохраните его в новой переменной.
+
+  let stations = [
+
+    'MAN675847583748sjt567654;Manchester Piccadilly',
+    
+    'GNF576746573fhdg4737dh4;Greenfield',
+    
+    'LIV5hg65hd737456236dch46dg4;Liverpool Lime Street',
+    
+    'SYB4f65hf75f736463;Stalybridge',
+    
+    'HUD5767ghtyfyr4536dh45dg45dg3;Huddersfield'
+    
+    ];
+    for (let i = 0; i < stations.length; i++){
+let a=stations[i];
+let b=a.slice(0,3);
+let c=a.indexOf(';');
+let d=a.slice(c+1);
+var e =`${b} :${d}`;
+    }
+    console.log(e);
+ 
+//Напишите функцию unique(arr), которая принимает массив, а возвращает новый массив, содержащий только уникальные элементы arr.
+//Пример:
+//let strings = ["кришна", "кришна", "харе", "харе", "харе", "харе", "кришна", "кришна", ":-O"];
+//console.log(unique(strings) ); должен вывести "кришна, харе, :-O"
+//ПОДСКАЗКА
+//- создать новый массив
+//- обойти исходный массив, если элемент отсутствует в новом - добавлять его в новый. Таким образом в новый добавятся только уникальные.
+
+function unique(arr) {
+  let result = [];
+
+  for (let str of arr) {
+    if (!result.includes(str)) {
+      result.push(str);
+    }
+  }
+
+  return result;
+}
+
+let strings = ["кришна", "кришна", "харе", "харе",
+  "харе", "харе", "кришна", "кришна", ":-O"
+];
+
+console.log( unique(strings) );
+
+
