@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div></div>
+  <ul>
+  </ul>
+  <script src="js/script.js"></script>
+</body>
+</html>
+
+//let div=document.querySelector("div");
+//let httpRequest= new XMLHttpRequest();
+
+//httpRequest.onload=function(){
+  //let title= JSON.parse(httpRequest.responseText);
+  //div.innerText=title.title;
+//}
+
+//httpRequest.open("GET", 'https://jsonplaceholder.typicode.com/todos/1');
+//httpRequest.send();
+
+let httpRequest= new XMLHttpRequest();
+let ul=document.querySelector('ul');
+httpRequest.onload=function(){
+  var title=[]
+  title= JSON.parse(httpRequest.responseText);
+  var n=20;
+  let title2=(title.slice(0,n));
+  for (let i=0; i<title2.length; i++){
+    let li=document.createElement("li");
+    li.innerText=title2
+    document.body.append(li);
+  }
+}
+
+httpRequest.open("GET", 'https://jsonplaceholder.typicode.com/todos');
+httpRequest.send();
+
