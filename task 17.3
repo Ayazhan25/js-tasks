@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="result"></div>
+    <button id="updateBtn">Обновить</button>
+    <button id="deleteBtn">Удалить</button>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+
+const baseUrl = 'https://jsonplaceholder.typicode.com';
+let taskId = null;
+
+// Создаем задачу
+fetch(`${baseUrl}/todos`, {
+  method: 'POST',
+  body: JSON.stringify({ title: 'Ayazhan' }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+    taskId = data.id;
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerText = JSON.stringify(data);
+  })
+  .catch((error) => console.log(error));
+
+// Обновляем задачу
+const updateBtn = document.getElementById('updateBtn');
+updateBtn.addEventListener('click', () => {
+  fetch(`${baseUrl}/todos/${taskId}`, {
+    method: 'PUT',
+    body: JSON.stringify({ title: new Date().toLocaleTimeString() }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  })
+    .then(() => {
+      updateBtn.innerText = 'Обновлено';
+    })
+    .catch((error) => console.log(error));
+});
+
+// Удаляем задачу
+const deleteBtn = document.getElementById('deleteBtn');
+deleteBtn.addEventListener('click', () => {
+  fetch(`${baseUrl}/todos/${taskId}`, {
+    method: 'DELETE',
+  })
+    .then(() => {
+      deleteBtn.innerText = 'Удалено';
+    })
+    .catch((error) => console.log(error));
+});
