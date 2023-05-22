@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="main">
+    <h1 class="todo-list-title">Create Your To-Do List</h1>
+
+    <input type="text" name="inppt-text" value="" placeholder="Enter your task" id="input" maxlength="50">
+
+    <ul class="list">
+        <!-- <li class="row">bla BLA 123 <span><a href="#">&#10006;</a> </span></li> -->
+    </ul>
+
+</div>
+
+<div class="buttons">
+    <button class="add">add task</button>
+    <button class="remove-all">remove all</button>
+</div>
+<script src="js/script.js"></script>
+</body>
+</html>
+
+const addBtn = document.querySelector('.add');
+let input = document.querySelector("#input[type='text']");
+let getUl = document.querySelector('.list');
+
+const makeLi = (value) => {
+    let createSpan = document.createElement('span');
+    
+    let createLi = document.createElement('li');
+    createLi.classList.add('row');
+    createLi.append(value);
+    createLi.append(createSpan);
+    
+    return createLi;
+}
+
+
+
