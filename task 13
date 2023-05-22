@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <script src="js/script.js"></script>
+</body>
+</html>
+
+function Cat(color){
+  this.color=color;
+  this.walk=function()  
+  {console.log(`${this.color} cat walks`)}
+}
+
+const cat= new Cat('white');
+cat.walk();
+
+class Calculator{
+  constructor(){
+    this.a = +prompt('a?');
+    this.b = +prompt('b?');
+  }
+  sum = function() {
+    return this.a + this.b;
+  };
+  mul = function() {
+    return this.a * this.b;
+  };
+}
+let calculator= new Calculator()
+alert( "Sum=" + calculator.sum() );
+alert( "Mul=" + calculator.mul() );
+
+
+class Logo {
+  constructor(url) {
+    this.top = 0;
+    this.left = 0;
+    this.width = 200;
+    this.imgUrl = url;
+    this.html = null;
+  }
+
+  init() {
+    let img = document.createElement('img');
+    img.src = this.imgUrl;
+    this.html = img;
+    this.render();
+    // метод должен создать тег img
+    // вложить в него src картинки (this.imgUrl)
+    // и записать в this.html
+    // + дергаем render
+
+    // + странице должен залится фон черным
+  }
+  render() {  
+    let body = document.querySelector('body');
+    body.style.background = 'black';
+    this.html.style.position = 'absolute';
+    this.html.style.top = this.top;
+    this.html.style.left = this.left;
+    this.html.width = this.width;
+    body.appendChild(this.html);
+  
+   // метод должен отрисовать изображение (this.html) на странице
+    // применить фиксированное позиционирование
+    // использовать this.top и this.left для указания позиции
+    // использовать this.width для указания ширины
+  }
+
+  moveUp() {
+    this.top -=20;
+    this.render();
+  //  console.log(this.html)
+    // метод должен изменять top нашего объекта так
+    // чтобы элемент передвинулся ВЫШЕ
+    // на 20px
+    // + дергаем render
+  }
+  moveDown() {
+    this.top += 20;
+    this.render();
+    // метод должен изменять top нашего объекта так
+    // чтобы элемент передвинулся НИЖЕ
+    // на 20px
+    // + дергаем render
+  }
+  moveLeft() {
+  this.left -= 20;
+  this.render();
+  }
+  moveRight() {
+  this.left += 20;
+  this.render(  );
+  }
+}
+
+const imgUrl = 'https://bit.ly/2tcDito';
+var mfLogotip = new Logo(imgUrl);
+console.log(mfLogotip);
+
+// запускаем наше микро-приложение
+mfLogotip.init();
+mfLogotip.moveUp();
+mfLogotip.moveRight();
+mfLogotip.moveRight();
+mfLogotip.moveRight();
+mfLogotip.moveRight();
+mfLogotip.moveDown();
+mfLogotip.moveDown();
+mfLogotip.moveDown();
+mfLogotip.moveDown();
+console.log(mfLogotip);
+// something else, чтобы всё работало
