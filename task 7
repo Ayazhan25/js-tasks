@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input id="elem" type="button" value="Нажми меня!">
+  <ul id="ul"></ul>
+  <input placeholder="Кликните здесь, затем нажмите клавишу." size="40">
+  <p id="p"></p>
+  
+  <script>
+elem.onclick = function(ul) {
+  var node = document.createElement('li');
+  node.appendChild(document.createTextNode('Нажми меня'));
+ document.querySelector('ul').appendChild(node);
+};
+
+const input = document.querySelector('input');
+const p = document.getElementById('p');
+input.addEventListener('keyup', logKey);
+
+function logKey(e) {
+  p.innerHTML += ` ${e.code}`;
+}
+
+  </script>
+</body>
+</html>
+
+//Описать в html тег input и тег ul. По нажатию на клавишу в инпуте в список ul должен добавляться элемент li. Содержимое li - нажатая клавиша.
+
+//Вставить в html тег input (просто предусмотреть в разметке).
+//Обрабатывая событие keyup на теге input, выводить в консоль введенный текст каждый раз, как только клиент вписывает любой символ в поле (или стирает любой символ из поля). Вам понадобится считывать значение поля, это input.value
+
+//Создать в html форму с инпутом и кнопкой. Также добавить в html тег ul. Когда форма отправляется, добавлять в список тег li. Его содержимое - введенный текст (input.value). После отправки формы инпут должен быть очищен (проставить пустую строку в value).
